@@ -286,7 +286,7 @@
     const variants = [
       {
         grams: 48,
-        image: "https://cdn.phototourl.com/member/2026-10-20-f7c97041-3908-48dc-9fca-07f4a48b3764.jpg"
+        image: "assets/haagen-dazs-48g-reduit-sucre.png"
       },
       {
         grams: 36,
@@ -296,7 +296,7 @@
     const variant = variants[Math.floor(Math.random() * variants.length)];
     document.querySelector("#variant-image").src = variant.image;
     document.querySelector("#variant-intro").innerHTML =
-      `Häagen-Dazs souhaite lancer une nouvelle glace <strong>riche en protéines et réduite en sucre</strong>, alliant plaisir gourmand et apport protéique élevé (<strong>${variant.grams} g de protéines</strong>). Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.`;
+      `Häagen-Dazs souhaite lancer une nouvelle glace <strong>riche en protéines et réduit en sucre</strong>, alliant plaisir gourmand et apport protéique élevé (<strong>${variant.grams} g de protéines</strong>). Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.`;
 
     const pages = [...document.querySelectorAll(".page")];
     let current = 0;
