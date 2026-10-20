@@ -300,6 +300,7 @@
       }
     ];
     const variant = variants[Math.floor(Math.random() * variants.length)];
+    const submissionEndpoint = "https://script.google.com/macros/s/AKfycbzDwaGN4MxuxmomfgK5L6d__I-46ft7_bbwBBshUInUGLPGaK1QKW6m33EEEp9jZ2cW/exec";
     document.querySelector("#variant-image").src = variant.image;
     document.querySelector("#variant-intro").innerHTML =
       `Häagen-Dazs souhaite lancer une nouvelle glace <strong>riche en protéines et réduit en sucre</strong>, alliant plaisir gourmand et apport protéique élevé (<strong>${variant.grams} g de protéines</strong>). Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.`;
@@ -312,12 +313,46 @@
       pages[current].classList.add("active");
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
+    const submitResponse = async () => {
+      const response = {
+        submitted_at: new Date().toISOString(),
+        variant_grams: variant.grams
+      };
+      document.querySelectorAll("form").forEach(form => {
+        new FormData(form).forEach((value, key) => {
+          response[key] = value;
+        });
+      });
+      await fetch(submissionEndpoint, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(response)
+      });
+    };
+
     document.querySelectorAll("form").forEach(form => {
-      form.addEventListener("submit", event => {
+      form.addEventListener("submit", async event => {
         event.preventDefault();
         if (!form.checkValidity()) {
           form.reportValidity();
           return;
+        }
+        if (current === 5) {
+          const button = form.querySelector("button[type='submit']");
+          button.disabled = true;
+          button.textContent = "Envoi en cours…";
+          try {
+            await submitResponse();
+          } catch (error) {
+            button.disabled = false;
+            button.textContent = "Terminer";
+            document.querySelector("#protein-answer").insertAdjacentHTML(
+              "afterend",
+              '<p class="error">L’envoi a échoué. Vérifiez votre connexion puis réessayez.</p>'
+            );
+            return;
+          }
         }
         const next = current + 1;
         if (next < pages.length) showPage(next);
