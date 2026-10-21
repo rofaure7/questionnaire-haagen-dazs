@@ -117,7 +117,7 @@
         <img id="variant-image" class="hero" alt="Pot de glace Häagen-Dazs riche en protéines">
         <div class="content">
           <div class="progress"><span style="width:20%"></span></div>
-          <h1>Étude sur une nouvelle glace riche en protéines</h1>
+          <h1 id="variant-title">Étude sur une nouvelle glace riche en protéines</h1>
           <p id="variant-intro"></p>
           <div class="actions"><button type="button" data-next>Commencer</button></div>
         </div>
@@ -304,12 +304,14 @@
       {
         grams: null,
         image: "assets/haagen-dazs-reduit-sucre.png",
-        intro: `Häagen-Dazs souhaite lancer une nouvelle glace allégée en sucre. Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.<br><br><strong>Nous vous invitons à bien observer l'image du produit.</strong>`
+        intro: `Häagen-Dazs souhaite lancer une nouvelle glace <strong>allégée en sucre</strong>. Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.<br><br><strong>Nous vous invitons à bien observer l'image du produit.</strong>`,
+        title: "Étude sur une nouvelle glace faible en sucre"
       }
     ];
     const variant = variants[Math.floor(Math.random() * variants.length)];
     const submissionEndpoint = "https://script.google.com/macros/s/AKfycbzDwaGN4MxuxmomfgK5L6d__I-46ft7_bbwBBshUInUGLPGaK1QKW6m33EEEp9jZ2cW/exec";
     document.querySelector("#variant-image").src = variant.image;
+    document.querySelector("#variant-title").textContent = variant.title || "Étude sur une nouvelle glace riche en protéines";
     document.querySelector("#variant-intro").innerHTML = variant.intro;
 
     const pages = [...document.querySelectorAll(".page")];
