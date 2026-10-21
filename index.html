@@ -267,6 +267,12 @@
             <input id="protein-grams" name="protein_grams" type="number" min="0" step="1">
           </div>
           <fieldset class="question">
+            <legend>Selon vous, cette glace est-elle riche en protéines ?</legend>
+            <label class="choice"><input type="radio" name="perception_proteines" value="Oui" required> Oui</label>
+            <label class="choice"><input type="radio" name="perception_proteines" value="Non"> Non</label>
+            <label class="choice"><input type="radio" name="perception_proteines" value="Je ne sais pas"> Je ne sais pas</label>
+          </fieldset>
+          <fieldset class="question">
             <legend>Sur une échelle de 1 à 5, dans quelle mesure seriez-vous susceptible d’acheter ce produit ?</legend>
             <label class="choice"><input type="radio" name="intention_achat" value="1" required> 1 - Pas du tout susceptible</label>
             <label class="choice"><input type="radio" name="intention_achat" value="2"> 2 - Peu susceptible</label>
@@ -292,18 +298,19 @@
     const variants = [
       {
         grams: 48,
-        image: "assets/haagen-dazs-48g-reduit-sucre.png"
+        image: "assets/haagen-dazs-48g-reduit-sucre.png",
+        intro: `Häagen-Dazs souhaite lancer une nouvelle glace <strong>riche en protéines et réduit en sucre</strong>, alliant plaisir gourmand et apport protéique élevé (<strong>48 g de protéines</strong>). Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.`
       },
       {
-        grams: 36,
-        image: "https://cdn.phototourl.com/member/2026-10-20-35d9babe-0f35-47c9-aac7-0a8fc75ffd48.jpg"
+        grams: null,
+        image: "assets/haagen-dazs-reduit-sucre.png",
+        intro: `Häagen-Dazs souhaite lancer une nouvelle glace allégée en sucre`
       }
     ];
     const variant = variants[Math.floor(Math.random() * variants.length)];
     const submissionEndpoint = "https://script.google.com/macros/s/AKfycbzDwaGN4MxuxmomfgK5L6d__I-46ft7_bbwBBshUInUGLPGaK1QKW6m33EEEp9jZ2cW/exec";
     document.querySelector("#variant-image").src = variant.image;
-    document.querySelector("#variant-intro").innerHTML =
-      `Häagen-Dazs souhaite lancer une nouvelle glace <strong>riche en protéines et réduit en sucre</strong>, alliant plaisir gourmand et apport protéique élevé (<strong>${variant.grams} g de protéines</strong>). Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.`;
+    document.querySelector("#variant-intro").innerHTML = variant.intro;
 
     const pages = [...document.querySelectorAll(".page")];
     let current = 0;
@@ -316,7 +323,8 @@
     const submitResponse = async () => {
       const response = {
         submitted_at: new Date().toISOString(),
-        variant_grams: variant.grams
+        variant_grams: variant.grams ?? "",
+        variant_condition: variant.grams === 48 ? "48 g de protéines et réduit en sucre" : "Allégée en sucre"
       };
       document.querySelectorAll("form").forEach(form => {
         new FormData(form).forEach((value, key) => {
