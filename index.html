@@ -302,10 +302,9 @@
         intro: `Häagen-Dazs souhaite lancer une nouvelle glace <strong>riche en protéines et réduit en sucre</strong>, alliant plaisir gourmand et apport protéique élevé (<strong>48 g de protéines</strong>). Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.<br><br><strong>Nous vous invitons à bien observer l'image du produit.</strong>`
       },
       {
-        grams: null,
+        grams: 16,
         image: "assets/haagen-dazs-reduit-sucre.png",
-        intro: `Häagen-Dazs souhaite lancer une nouvelle glace <strong>allégée en sucre</strong>. Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.<br><br><strong>Nous vous invitons à bien observer l'image du produit.</strong>`,
-        title: "Étude sur une nouvelle glace faible en sucre"
+        intro: `Häagen-Dazs souhaite lancer une nouvelle glace <strong>riche en protéines et réduit en sucre</strong>, alliant plaisir gourmand et apport protéique élevé (<strong>16 g de protéines</strong>). Elle serait vendue en pot individuel de 450 ml. Avant de répondre, imaginez qu'elle soit disponible dans les grandes surfaces habituelles.`
       }
     ];
     const variant = variants[Math.floor(Math.random() * variants.length)];
@@ -326,7 +325,7 @@
       const response = {
         submitted_at: new Date().toISOString(),
         variant_grams: variant.grams ?? "",
-        variant_condition: variant.grams === 48 ? "48 g de protéines et réduit en sucre" : "Allégée en sucre"
+        variant_condition: variant.grams === 48 ? "48 g de protéines et réduit en sucre" : "16 g de protéines et réduit en sucre"
       };
       document.querySelectorAll("form").forEach(form => {
         new FormData(form).forEach((value, key) => {
